@@ -11,7 +11,7 @@
 
         @foreach ($technologies as $technology)
             <div href="{{ route('admin.technologies.show', $technology->slug) }}"
-                class="mt-2 d-block position-relative border border-success border-2 p-3 rounded fw-bold text-white bg-dark">
+                class="mt-2 d-block position-relative border border-success border-2 p-3 rounded fw-bold text-white bg-dark text-capitalize">
                 {{ $technology->name }}
                 <a href="{{ route('admin.technologies.show', $technology->slug) }}">
                     <i class="fa-solid fa-eye position-absolute top-25 end-0 text-success me-1 fs-5"></i>

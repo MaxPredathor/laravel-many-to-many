@@ -11,11 +11,19 @@
         <img class="w-50" src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}">
         <div class="my-4">
             <h4 class="d-inline">Technologies:</h4>
-            @for ($i = 0; $i < count($project->technologies); $i++)
+            {{-- @for ($i = 0; $i < count($project->technologies); $i++)
                 <div class="d-inline-block m-2 ">
                     <img style="width: 50px" src="{{ $project->technologies[$i] }}" alt="">
                 </div>
-            @endfor
+            @endfor --}}
+            @if ($project->technologies)
+                @foreach ($project->technologies as $item)
+                    {{-- <li><a class="text-white text-decoration-none"
+                                href="{{ route('admin.technologies.show', $item->slug) }}">{{ $item->name }}</a></li> --}}
+                    <img style="width: 50px" src="{{ $item->image }}" alt="{{ $item->name }}">
+                    {{-- <div>{{ $item->name }}</div> --}}
+                @endforeach
+            @endif
         </div>
 
         @if ($project->category)

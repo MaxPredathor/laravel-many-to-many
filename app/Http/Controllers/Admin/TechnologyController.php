@@ -34,6 +34,11 @@ class TechnologyController extends Controller
     {
         $formData = $request->validated();
         $formData['slug'] = Str::slug($formData['name'], '-');
+        if($formData['name'] === 'laravel') {
+            $formData['image'] = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/'. $formData['name'] . '/' . $formData['name'] . '-plain.svg';
+        }else{
+            $formData['image'] = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/'. $formData['name'] . '/' . $formData['name'] . '-original.svg';
+        }
         $technology = Technology::create($formData);
         return view('admin.technologies.show', compact('technology'));
     }

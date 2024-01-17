@@ -23,8 +23,8 @@ class UpdateTechnologyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'max:255', 'string', Rule::unique('categories')->ignore($this->categories)],
-            'image' => ['required', 'string'],
+            'name' => ['required', 'max:255', 'string', Rule::unique('technologies')->ignore($this->technologies)],
+            'image' => ['nullable', 'string'],
         ];
     }
 
@@ -33,7 +33,6 @@ class UpdateTechnologyRequest extends FormRequest
             'name.unique' => 'Il nome deve essere univoco',
             'name.required' => 'Il nome è obbligatorio',
             'name.max' => 'Il nome non deve superare i :max caratteri',
-            'image.required' => 'L\'immagine è obbligatoria'
         ];
     }
 }

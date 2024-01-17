@@ -23,7 +23,7 @@ class StoreTechnologyRequest extends FormRequest
     {
         return [
             'name' => ['required', 'max:255', 'string', 'unique:categories'],
-            'image' => ['required', 'string'],
+            'image' => ['nullable', 'string'],
         ];
     }
 
@@ -32,7 +32,6 @@ class StoreTechnologyRequest extends FormRequest
             'name.unique' => 'Il nome deve essere univoco',
             'name.required' => 'Il nome è obbligatorio',
             'name.max' => 'Il nome non deve superare i :max caratteri',
-            'image.required' => 'L\'immagine è obbligatoria'
         ];
     }
 }
