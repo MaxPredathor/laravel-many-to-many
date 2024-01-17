@@ -44,12 +44,15 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            @foreach ($technologies as $item)
+            @foreach ($technologies as $technology)
                 <div class="d-inline-block mx-2">
-                    <input name="technologies[]" id="{{ $item['name'] }}" value="{{ $item['image'] }}" type="checkbox">
-                    <img style="width: 50px" src="{{ $item['image'] }}" alt="{{ $item['name'] }}">
+                    <input name="technologies_id" id="technologies_id" value="{{ $technology->id }}" type="checkbox">
+                    <img style="width: 50px" src="{{ $technology->image }}" alt="{{ $technology->name }}">
                 </div>
             @endforeach
+            @error('technologies_id')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
             <div class="my-2">
                 <button type="submit" class="btn btn-success">Submit</button>
                 <button type="reset" class="btn btn-primary">Reset</button>

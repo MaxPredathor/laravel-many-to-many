@@ -7,6 +7,7 @@ use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Technology;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -28,7 +29,8 @@ class ProjectController extends Controller
     public function create()
     {
         $categories = Category::all();
-        $technologies = config('technologies.key');
+        // $technologies = config('technologies.key');
+        $technologies = Technology::all();
         return view('admin.projects.create', compact('technologies', 'categories'));
     }
 
@@ -49,6 +51,9 @@ class ProjectController extends Controller
         }
         $formData['technologies'] = implode(',', $request->input('technologies'));
         $project = Project::create($formData);
+        if($request->has('technologies')){
+            $project->technologies()->attach($request->technologies);
+        }
         return redirect()->route('admin.projects.show', $project->slug);
     }
 
@@ -67,7 +72,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $categories = Category::all();
-        $technologies = config('technologies.key');
+        $technologies = Technology::all();
+        // $technologies = config('technologies.key');
         return view('admin.projects.edit', compact('project', 'technologies', 'categories'));
     }
 

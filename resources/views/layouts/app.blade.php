@@ -35,6 +35,11 @@
                             <h3>Categories</h3>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('admin.technologies.index') }}">
+                            <h3>Technologies</h3>
+                        </a>
+                    </li>
                     {{-- <li><a href="{{ route('admin.technologies.index') }}">Technologies</a></li> --}}
                 </ul>
             </div>
