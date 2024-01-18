@@ -19,7 +19,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        $currentUserId = Auth::id();
+        $projects = Project::where('user_id', $currentUserId)->paginate(2);
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -61,7 +62,10 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('admin.projects.show', compact('project'));
+        if(Auth::id() == $project->id){
+            return view('admin.projects.show', compact('project'));
+        }
+        abort(403);
     }
 
     /**
@@ -71,8 +75,12 @@ class ProjectController extends Controller
     {
         $categories = Category::all();
         $technologies = Technology::all();
+
+        if(Auth::id() == $project->id){
+            return view('admin.projects.edit', compact('project', 'technologies', 'categories'));
+        }
+        abort(403);
         // $technologies = config('technologies.key');
-        return view('admin.projects.edit', compact('project', 'technologies', 'categories'));
     }
 
     /**
@@ -110,10 +118,14 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        if ($project->image) {
-            Storage::delete($project->image);
+        if(Auth::id() == $project->id){
+            if ($project->image) {
+                Storage::delete($project->image);
+            }
+            $project->delete();
+            return to_route('admin.projects.index')->with('message', "Il Progetto '$project->title' è stato  eliminato");
         }
-        $project->delete();
-        return to_route('admin.projects.index')->with('message', "Il Progetto '$project->title' è stato  eliminato");
+        abort(403);
+
     }
 }
