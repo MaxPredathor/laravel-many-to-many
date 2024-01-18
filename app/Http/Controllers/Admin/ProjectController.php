@@ -20,7 +20,11 @@ class ProjectController extends Controller
     public function index()
     {
         $currentUserId = Auth::id();
-        $projects = Project::where('user_id', $currentUserId)->paginate(2);
+        if($currentUserId == 1){
+            $projects = Project::paginate(2);
+        }else{
+            $projects = Project::where('user_id', $currentUserId)->paginate(2);
+        }
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -62,7 +66,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        if(Auth::id() == $project->id){
+        $currentUserId = Auth::id();
+        if($currentUserId == 1 || $project->user_id == $currentUserId){
             return view('admin.projects.show', compact('project'));
         }
         abort(403);
@@ -73,13 +78,13 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $currentUserId = Auth::id();
+        if($currentUserId != 1 && $currentUserId != $project->user_id){
+            abort(403);
+        }
         $categories = Category::all();
         $technologies = Technology::all();
-
-        if(Auth::id() == $project->id){
-            return view('admin.projects.edit', compact('project', 'technologies', 'categories'));
-        }
-        abort(403);
+        return view('admin.projects.show', compact('project'));
         // $technologies = config('technologies.key');
     }
 
@@ -118,14 +123,12 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        if(Auth::id() == $project->id){
-            if ($project->image) {
-                Storage::delete($project->image);
-            }
+        $currentUserId = Auth::id();
+        if($currentUserId != 1 && $currentUserId != $project->user_id){
+            abort(403);
+        }
             $project->delete();
             return to_route('admin.projects.index')->with('message', "Il Progetto '$project->title' è stato  eliminato");
-        }
-        abort(403);
 
     }
 }
