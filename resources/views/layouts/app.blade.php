@@ -22,7 +22,13 @@
 <body>
     <div id="app">
         <nav>
-            <img src="{{ Vite::asset('public/images/Logo.png') }}" alt="Logo">
+            <div id="hamburger-logo">
+                <img src="{{ Vite::asset('public/images/Logo.png') }}" alt="Logo">
+                <div class="text-white" id="hamburger">
+                    <i id="icon" class="fs-3 fa-solid fa-arrow-left"></i>
+                </div>
+            </div>
+
             <div id="nav">
                 <ul>
                     <li>
@@ -79,12 +85,37 @@
             </div>
         </nav>
         <div id="main-aside" class="d-flex">
-            <aside></aside>
+            <aside id="aside"></aside>
             <main>
                 @yield('content')
             </main>
         </div>
     </div>
+    <script>
+        const aside = document.getElementById("aside");
+        const hamburger = document.getElementById("hamburger");
+        const icon = document.getElementById("icon");
+        const main = document.querySelector("main");
+        let flag = false;
+        hamburger.addEventListener("click", (event) => {
+            flag = !flag;
+            if (flag) {
+                aside.style.width = "0%";
+                main.style.width = "100%";
+                setTimeout(() => {
+                    icon.classList.remove('fa-arrow-left')
+                    icon.classList.add('fa-arrow-right')
+                }, 200);
+            } else {
+                aside.style.width = "12%";
+                setTimeout(() => {
+                    icon.classList.remove('fa-arrow-right')
+                    icon.classList.add('fa-arrow-left')
+                    main.style.width = "88%";
+                }, 200);
+            }
+        });
+    </script>
 </body>
 
 </html>

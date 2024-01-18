@@ -65,6 +65,15 @@ i {
         #register-login {
             color: white;
         }
+        #hamburger-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            #hamburger {
+                margin-left: 250px;
+            }
+        }
     }
     #main-aside {
         width: 100%;
@@ -74,10 +83,11 @@ i {
         // justify-content: center;
         // align-items: center;
 
-        aside {
+        #aside {
             width: 12%;
             height: 100%;
             background-color: #2d2e2d;
+            transition: width 0.2s linear;
         }
         main {
             width: 88%;
